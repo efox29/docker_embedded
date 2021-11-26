@@ -6,7 +6,7 @@ ARG TOOLS_PATH=/tool
 ARG ARM_GCC_TOOLCHAIN_URL="https://developer.arm.com/-/media/Files/downloads/gnu-rm/10.3-2021.10/gcc-arm-none-eabi-10.3-2021.10-x86_64-linux.tar.bz2"
 
 
-RUN mkdir ${TOOLS_PATH}
+RUN mkdir -p ${TOOLS_PATH}/arm-compiler
 WORKDIR ${TOOLS_PATH}
 
 RUN apt-get update && \
@@ -19,10 +19,10 @@ RUN apt-get update && \
     wget && \
     apt-get clean
 
-RUN wget -qO- ${ARM_GCC_TOOLCHAIN_URL} | tar -xj
+RUN wget -qO- ${ARM_GCC_TOOLCHAIN_URL} | tar -xj --strip-components=1 -C arm-compiler/
 
 
-ENV PATH="$TOOLS_PATH/bin:$PATH"
+ENV PATH="$PATH:$TOOLS_PATH/arm-compiler/bin"
 
 RUN mkdir -p /app
 WORKDIR /app
