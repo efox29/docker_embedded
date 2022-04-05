@@ -13,7 +13,8 @@ RUN apt-get update && \
     bzip2 \  
     software-properties-common \
     vim \
-    busybox \    
+    busybox \ 
+    ruby \   
     wget && \
     apt-get clean
 
@@ -46,6 +47,9 @@ RUN wget -qO- ${ARM_GCC_TOOLCHAIN_URL} | tar -xj --strip-components=1 -C arm-com
 
 RUN wget -qO- ${NINJA_URL} | busybox unzip - -d ninja
 RUN chmod +x ninja/ninja
+
+# install ceedling
+RUN gem install ceedling
 
 # set paths
 ENV PATH="$PATH:$TOOLS_PATH/arm-compiler/bin"
