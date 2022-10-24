@@ -15,6 +15,7 @@ RUN apt-get update && \
     vim \
     busybox \ 
     ruby \   
+    git \
     wget && \
     apt-get clean
 
