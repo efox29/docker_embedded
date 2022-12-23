@@ -1,5 +1,8 @@
 #!/bin/sh
 
+# This will work on any repository because you pass in the complete repo. So it will always make whatever version you pass as the lastest tag.
+# This uses whatever user is logged into docker cli. 
+
 if [ $# -eq 0 ]
   then
     echo "You must provide full name and version eg. efox29/arm-toolchain:v1.0.0"    

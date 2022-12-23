@@ -16,7 +16,8 @@ RUN apt-get update && \
     busybox \ 
     ruby \   
     git \
-    wget && \
+    wget  \
+    cppcheck && \
     apt-get clean
 
 ARG TOOLS_PATH=/tool 
