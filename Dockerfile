@@ -22,9 +22,9 @@ RUN apt-get update && \
 
 ARG TOOLS_PATH=/tool 
 
-ARG ARM_GCC_TOOLCHAIN_URL="https://developer.arm.com/-/media/Files/downloads/gnu-rm/10.3-2021.10/gcc-arm-none-eabi-10.3-2021.10-x86_64-linux.tar.bz2"
-ARG CMAKE_URL="https://github.com/Kitware/CMake/releases/download/v3.21.4/cmake-3.21.4-linux-x86_64.sh"
-ARG NINJA_URL="https://github.com/ninja-build/ninja/releases/download/v1.10.2/ninja-linux.zip"
+ARG ARM_GCC_TOOLCHAIN_URL="https://developer.arm.com/-/media/Files/downloads/gnu/13.2.rel1/binrel/arm-gnu-toolchain-13.2.rel1-x86_64-arm-none-eabi.tar.xz?rev=e434b9ea4afc4ed7998329566b764309&hash=CA590209F5774EE1C96E6450E14A3E26"
+ARG CMAKE_URL="https://github.com/Kitware/CMake/releases/download/v3.27.8/cmake-3.27.8-linux-x86_64.sh"
+ARG NINJA_URL="https://github.com/ninja-build/ninja/releases/download/v1.11.1/ninja-linux.zip"
 
 RUN mkdir -p ${TOOLS_PATH}/arm-compiler
 RUN mkdir -p ${TOOLS_PATH}/cmake
@@ -44,9 +44,9 @@ RUN chmod +x cmake.sh
 RUN (echo y; echo y) | ./cmake.sh --prefix=${TOOLS_PATH}/cmake --exclude-subdir
 RUN rm cmake.sh
 
+#install compiler
+RUN wget -qO- ${ARM_GCC_TOOLCHAIN_URL} | tar -xJ --strip-components=1 -C arm-compiler/
 #install ninja
-RUN wget -qO- ${ARM_GCC_TOOLCHAIN_URL} | tar -xj --strip-components=1 -C arm-compiler/
-
 RUN wget -qO- ${NINJA_URL} | busybox unzip - -d ninja
 RUN chmod +x ninja/ninja
 
@@ -61,5 +61,5 @@ ENV PATH="$PATH:$TOOLS_PATH/ninja"
 RUN mkdir -p /app
 WORKDIR /app
 
-# /* if you do TEMP=$(basename *.sh .sh) it will strip the extention. Need to store this in a var and should be good to go*/
+
     
